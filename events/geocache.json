@@ -184,5 +184,125 @@
   "lng": -122.3965529,
   "display": "Pier 9, The Embarcadero, Telegraph Hill, Financial District, San Francisco, California, 94111, United States",
   "via": "nominatim"
+ },
+ "1-4 Onohama-cho, Chuo-ku, Kobe 651-0082 (神戸市中央区小野浜町1-4)": {
+  "lat": 34.684963,
+  "lng": 135.198715,
+  "display": "兵庫県神戸市中央区小野浜町１番４号",
+  "via": "gsi"
+ },
+ "1-5-4 Minatojima Minamimachi, Chuo-ku, Kobe (神戸市中央区港島南町1丁目5番4号)": {
+  "lat": 34.6595,
+  "lng": 135.217041,
+  "display": "兵庫県神戸市中央区港島南町一丁目５番地",
+  "via": "gsi"
+ },
+ "1-8-4 Higashikawasaki-cho, Chuo-ku, Kobe 650-0044 (神戸市中央区東川崎町1-8-4)": {
+  "lat": 34.680454,
+  "lng": 135.181808,
+  "display": "兵庫県神戸市中央区東川崎町一丁目８番",
+  "via": "gsi"
+ },
+ "2-1 Hatoba-cho, Chuo-ku, Kobe 650-0042 (神戸市中央区波止場町2番1号)": {
+  "lat": 34.684692,
+  "lng": 135.189758,
+  "display": "兵庫県神戸市中央区波止場町２番",
+  "via": "gsi"
+ },
+ "2-2 Hatoba-cho, Chuo-ku, Kobe 650-0042 (神戸市中央区波止場町2-2)": {
+  "lat": 34.684692,
+  "lng": 135.189758,
+  "display": "兵庫県神戸市中央区波止場町２番",
+  "via": "gsi"
+ },
+ "5-2 Shinko-cho, Chuo-ku, Kobe 650-0041 (神戸市中央区新港町5-2)": {
+  "lat": 34.68409,
+  "lng": 135.199814,
+  "display": "兵庫県神戸市中央区新港町５番",
+  "via": "gsi"
+ },
+ "6-10-1 Minatojima Nakamachi, Chuo-ku, Kobe 650-0046 (神戸市中央区港島中町6-10-1)": {
+  "lat": 34.664421,
+  "lng": 135.214569,
+  "display": "兵庫県神戸市中央区港島中町六丁目１０番",
+  "via": "gsi"
+ },
+ "6-11-1 Minatojima Nakamachi, Chuo-ku, Kobe 650-0046 (神戸市中央区港島中町6-11-1)": {
+  "lat": 34.663628,
+  "lng": 135.212219,
+  "display": "兵庫県神戸市中央区港島中町六丁目１１番",
+  "via": "gsi"
+ },
+ "6-3-7 Minatojima Minamimachi, Chuo-ku, Kobe (神戸市中央区港島南町6-3-7)": {
+  "lat": 34.655674,
+  "lng": 135.221619,
+  "display": "兵庫県神戸市中央区港島南町六丁目３番地",
+  "via": "gsi"
+ },
+ "6-4-1 Kano-cho, Chuo-ku, Kobe 650-0001 (神戸市中央区加納町6丁目4-1)": {
+  "lat": 34.688126,
+  "lng": 135.196335,
+  "display": "兵庫県神戸市中央区加納町六丁目４番",
+  "via": "gsi"
+ },
+ "6-9-1 Minatojima Nakamachi, Chuo-ku, Kobe 650-0046 (神戸市中央区港島中町6丁目9-1)": {
+  "lat": 34.665592,
+  "lng": 135.209518,
+  "display": "兵庫県神戸市中央区港島中町六丁目９番",
+  "via": "gsi"
+ },
+ "7-7-6 Minatojima Nakamachi, Chuo-ku, Kobe 650-0046 (神戸市中央区港島中町7-7-6)": {
+  "lat": 34.666309,
+  "lng": 135.217957,
+  "display": "兵庫県神戸市中央区港島中町七丁目７番地",
+  "via": "gsi"
+ },
+ "8-1-6 Gokodori, Chuo-ku, Kobe 651-0087 (神戸市中央区御幸通8-1-6)": {
+  "lat": 34.691883,
+  "lng": 135.195938,
+  "display": "兵庫県神戸市中央区御幸通八丁目１番６号",
+  "via": "gsi"
+ },
+ "8-2 Kobe Airport, Chuo-ku, Kobe 650-0048 (神戸市中央区神戸空港8番2号)": {
+  "lat": 34.637703,
+  "lng": 135.224792,
+  "display": "兵庫県神戸市中央区神戸空港",
+  "via": "gsi"
+ },
+ "Center Plaza 6F, 1-9-1 Sannomiya-cho, Chuo-ku, Kobe 650-0021 (神戸市中央区三宮町1-9-1 センタープラザ6階)": {
+  "lat": 34.691673,
+  "lng": 135.192444,
+  "display": "兵庫県神戸市中央区三宮町一丁目９番",
+  "via": "gsi"
+ },
+ "EKIZO Kobe Sannomiya 29F, 4-2-1 Kano-cho, Chuo-ku, Kobe 650-0001 (神戸市中央区加納町4-2-1 EKIZO神戸三宮29階)": {
+  "lat": 34.69405,
+  "lng": 135.193619,
+  "display": "兵庫県神戸市中央区加納町四丁目２番",
+  "via": "gsi"
+ },
+ "Kobe Bunka Hall, 4-2-2 Kusunoki-cho, Chuo-ku, Kobe 650-0017 (神戸市中央区楠町4丁目2-2)": {
+  "lat": 34.683842,
+  "lng": 135.172501,
+  "display": "兵庫県神戸市中央区楠町四丁目２番",
+  "via": "gsi"
+ },
+ "Kobe Maritime Museum 2F, 2-2 Hatoba-cho, Chuo-ku, Kobe 650-0042 (神戸市中央区波止場町2-2 神戸海洋博物館2F)": {
+  "lat": 34.684692,
+  "lng": 135.189758,
+  "display": "兵庫県神戸市中央区波止場町２番",
+  "via": "gsi"
+ },
+ "Kobe Sannomiya Hankyu Bldg 15F, 4-2-1 Kano-cho, Chuo-ku, Kobe 650-0001 (神戸市中央区加納町4-2-1 神戸三宮阪急ビル15階)": {
+  "lat": 34.69405,
+  "lng": 135.193619,
+  "display": "兵庫県神戸市中央区加納町四丁目２番",
+  "via": "gsi"
+ },
+ "MRSX Bldg 3F, 1-2-1 Sakaemachi-dori, Chuo-ku, Kobe 650-0023 (神戸市中央区栄町通1-2-1 MRSXビル3F)": {
+  "lat": 34.687683,
+  "lng": 135.189362,
+  "display": "兵庫県神戸市中央区栄町通一丁目２番１号",
+  "via": "gsi"
  }
 }
