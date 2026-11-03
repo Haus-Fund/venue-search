@@ -572,8 +572,8 @@ HFI.CONFIG = {
     for (const n of HFI.nodes.values()) { const key = n.name.toLowerCase(); const re = new RegExp(`\\b(${key}|${key.replace('haus', ' haus')}|${key.replace('haus', '')} house)\\b`); if (eat(re)) { f.haus = n.id; if (n.market && HFI.markets.get(n.market)?.has_map) f.market = n.market; read.push(n.name); } }
     if (!f.haus && eat(/\b(women|women's|female|femme)\b/)) { f.haus = 'fem-haus'; read.push('Femhaus'); }
     if (!f.haus && eat(/\b(alumni|alums?)\b/)) { f.haus = 'alum-haus'; read.push('Alumhaus'); }
-    if ((m = eat(/\$\s?(\d[\d,]*\.?\d*)\s*(k)?\s*(?:\/|per|a|each)?\s*(?:bench|bed|person|head|month|mo|night)?/))) { let v = +m[1].replace(/,/g, ''); if (m[2]) v *= 1000; f.maxBed = Math.round(v); read.push(`up to ${HFI.fmtMoney(f.maxBed)} per bed`); }
-    else if ((m = eat(/\b(?:under|below|max|maximum|up to|less than|budget(?: of)?|cheaper than)\s+(\d[\d,]*)\b/))) { f.maxBed = +m[1].replace(/,/g, ''); read.push(`up to ${HFI.fmtMoney(f.maxBed)} per bed`); }
+    if ((m = eat(/\$\s?(\d[\d,]*\.?\d*)\s*(k)?\s*(?:\/|per|a|each)?\s*(?:bench|bed|person|head|month|mo|night)?/))) { let v = +m[1].replace(/,/g, ''); if (m[2]) v *= 1000; f.maxBed = Math.round(v); read.push(`up to ${HFI.fmtMoney(f.maxBed)} per bench`); }
+    else if ((m = eat(/\b(?:under|below|max|maximum|up to|less than|budget(?: of)?|cheaper than)\s+(\d[\d,]*)\b/))) { f.maxBed = +m[1].replace(/,/g, ''); read.push(`up to ${HFI.fmtMoney(f.maxBed)} per bench`); }
     if ((m = eat(/\b(\d+)\s*(?:\+\s*)?(?:benches|bench|people|persons?|founders|scientists|researchers|heads?|teams?)\b/))) { f.needBeds = +m[1]; read.push(`${f.needBeds} benches`); }
     if ((m = eat(/\b(\d+)\s*(?:min|mins|minutes?)\b(?:\s*walk(?:ing)?)?/))) { f.maxWalk = +m[1]; read.push(`${f.maxWalk} min walk or less`); }
     else if (eat(/\b(walking distance|walkable|near frontier|close to frontier|near the tower|nearby|near kbic|close by)\b/)) { f.maxWalk = 20; read.push('20 min walk or less'); }

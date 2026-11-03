@@ -1,15 +1,16 @@
-# Geocode lab addresses, cached in labs/geocache.json. Re-runs only look up addresses not placed yet.
+# Geocode addresses from <dir>/research/*.json, cached in <dir>/geocache.json (dir = labs or events). Re-runs only look up addresses not placed yet.
 # US: OpenStreetMap Nominatim (1 request per second), retried without suite / floor / building prefixes.
 # Japan: the Geospatial Information Authority of Japan address search (GSI), using the Japanese address
 # in parentheses; it resolves to the block (chome / banchi), which is close enough for walk estimates.
-# Usage: python3 labs/geocode.py
-import json, glob, subprocess, time, urllib.parse, os, re
-CACHE = 'labs/geocache.json'
+# Usage: python3 labs/geocode.py [labs|events]
+import json, glob, subprocess, time, urllib.parse, os, re, sys
+DIR = sys.argv[1] if len(sys.argv) > 1 else 'labs'
+CACHE = f'{DIR}/geocache.json'
 cache = json.load(open(CACHE)) if os.path.exists(CACHE) else {}
-recs = [r for f in sorted(glob.glob('labs/research/*.json')) for r in json.load(open(f))]
+recs = [r for f in sorted(glob.glob(f'{DIR}/research/*.json')) for r in json.load(open(f))]
 
 def get(url):
-    out = subprocess.run(['curl', '-s', '-H', 'User-Agent: haus-lab-finder/1.0 (github.com/Haus-Fund/venue-search)', url], capture_output=True, text=True).stdout
+    out = subprocess.run(['curl', '-s', '-H', 'User-Agent: haus-venue-search/1.0 (github.com/Haus-Fund/venue-search)', url], capture_output=True, text=True).stdout
     try: return json.loads(out)
     except Exception: return []
 

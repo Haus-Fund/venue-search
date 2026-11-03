@@ -20,3 +20,5 @@ data/exports/*
 web/public/haus-fund-housing-network.html
 labs/exports/*
 !labs/exports/haus-fund-lab-finder.html
+events/exports/*
+!events/exports/haus-fund-venue-finder.html

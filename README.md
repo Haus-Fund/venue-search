@@ -1,6 +1,6 @@
 # venue-search
 
-Two searches for Haus residencies, on the same map app: housing (below) and lab space ([Lab Finder](#lab-finder)).
+Three searches for Haus residencies, on the same map app: housing (below), lab space ([Lab Finder](#lab-finder)) and event venues ([Venue Finder](#venue-finder)).
 
 Search for buildings (venues) for Haus residencies. You type what a house needs in plain words ("40 beds, kitchen, under $1,500, 15 min walk") and get matching buildings on a map, ranked by a 0 to 100 fit score.
 
@@ -51,7 +51,7 @@ The same app, pointed at lab space instead of housing. Describe what you need ("
 Open `labs/exports/haus-fund-lab-finder.html` in a browser. To rebuild after editing the data:
 
 ```bash
-npm run labs:geocode   # only looks up new addresses (OpenStreetMap Nominatim, 1 per second)
+npm run labs:geocode   # only looks up new addresses (OpenStreetMap Nominatim for the US, GSI for Japan)
 npm run labs:build
 ```
 
@@ -60,3 +60,19 @@ npm run labs:build
 - `labs/src/`: the modules that differ from the housing app (config, model, scoring, filters and prompt parser, list, drawer, views). `data/build-inventory.ts` uses them in place of the same-named files in `data/inventory/src/`, so the map engine and app shell are shared.
 - The parser understands bench counts, budget, walk time, BSL-2, wet lab, private suite, equipment (fume hood, biosafety cabinet, autoclave, cold room, -80 freezer, tissue culture, vivarium, shared core equipment) and space type (incubator, community lab, coworking, university core, lab building).
 - Internally the lab records reuse the housing field names: `total_beds` holds benches, `kitchen_status` holds BSL-2 (communal = yes), `safety_flag` holds wet lab (ok = wet lab, rough-block = dry lab only).
+
+## Venue Finder
+
+The same app for programming and events. Describe the event ("talk for 80 with a projector, under $300/hr", "dinner for 30 with drinks, exclusive", "rooftop party for 100") and see venues on the map, ranked by price per hour, walk to the anchor, capacity against the headcount, food allowed and AV.
+
+Open `events/exports/haus-fund-venue-finder.html` in a browser. To rebuild:
+
+```bash
+npm run events:geocode
+npm run events:build
+```
+
+- `events/research/*.json`: venues from web research, one file per market, with source links. Unknown fields are null. Prices are as listed, not confirmed.
+- `events/export.ts`: research to `events/inventory.json`. Capacity is standing capacity, else seated. A venue must hold the whole headcount to match (venues with no published capacity still show).
+- `events/src/`: the modules that differ from the housing app. Internally `total_beds` holds capacity, `asking_per_bed` the hourly rate, `kitchen_status` whether food is allowed and `safety_flag` whether AV is on site.
+- The parser understands headcount ("for 100", "80 people"), budget per hour, walk time, food, AV, exclusive use, amenities (mics, stage, livestream, alcohol, bar, outdoor, wheelchair access, breakout rooms, whiteboards, kitchen, late night, parking) and venue type.

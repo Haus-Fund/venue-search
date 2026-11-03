@@ -10,8 +10,10 @@
     "typecheck": "tsc --noEmit",
     "web:dev": "npm --prefix web run dev",
     "web:build": "npm --prefix web run build",
-    "labs:geocode": "python3 labs/geocode.py",
-    "labs:build": "tsx labs/export.ts && tsx data/build-inventory.ts labs/inventory.json labs/exports/haus-fund-lab-finder.html labs/template.html labs/src"
+    "labs:geocode": "python3 geocode.py labs",
+    "labs:build": "tsx labs/export.ts && tsx data/build-inventory.ts labs/inventory.json labs/exports/haus-fund-lab-finder.html labs/template.html labs/src",
+    "events:geocode": "python3 geocode.py events",
+    "events:build": "tsx events/export.ts && tsx data/build-inventory.ts events/inventory.json events/exports/haus-fund-venue-finder.html events/template.html events/src"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
