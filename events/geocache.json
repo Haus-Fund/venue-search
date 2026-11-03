@@ -1,0 +1,188 @@
+{
+ "1 Ferry Building, Suite 201, San Francisco, CA 94111": {
+  "lat": 37.7955487,
+  "lng": -122.3934746,
+  "display": "San Francisco Ferry Building, 1, The Embarcadero, Financial District, San Francisco, California, 94111, United States",
+  "via": "nominatim"
+ },
+ "100 Larkin Street, San Francisco, CA 94102": {
+  "lat": 37.7791882,
+  "lng": -122.4157831,
+  "display": "San Francisco Public Library - Main Library, 100, Larkin Street, Civic Center, San Francisco, California, 94102, United States",
+  "via": "nominatim"
+ },
+ "110 The Embarcadero, San Francisco, CA 94105": {
+  "lat": 37.7932364,
+  "lng": -122.392646,
+  "display": "The Commonwealth Club of California, 110, The Embarcadero, Financial District, San Francisco, California, 94105, United States",
+  "via": "nominatim"
+ },
+ "1100 Market Street (entrance at 45 McAllister St), San Francisco, CA 94102": {
+  "lat": 37.7808481,
+  "lng": -122.4125251,
+  "display": "San Francisco Proper Hotel, 1100, Market Street, West SoMa, Tenderloin, San Francisco, California, 94102, United States",
+  "via": "nominatim"
+ },
+ "127 Ellis Street, San Francisco, CA 94102": {
+  "lat": 37.7851927,
+  "lng": -122.4083668,
+  "display": "Hotel Abri, 127, Ellis Street, Union Square, Tenderloin, San Francisco, California, 94102, United States",
+  "via": "nominatim"
+ },
+ "1275 Minnesota Street, San Francisco, CA 94107": {
+  "lat": 37.7542541,
+  "lng": -122.3893902,
+  "display": "1275, Minnesota Street, Potrero Hill, San Francisco, California, 94124, United States",
+  "via": "nominatim"
+ },
+ "128 King Street, San Francisco, CA 94107": {
+  "lat": 37.7794501,
+  "lng": -122.3904353,
+  "display": "128, King Street, South Beach, Mission Bay, San Francisco, California, 94107, United States",
+  "via": "nominatim"
+ },
+ "135 4th Street, San Francisco, CA": {
+  "lat": 37.7842713,
+  "lng": -122.4033021,
+  "display": "Metreon, 135, 4th Street, South of Market, Tenderloin, San Francisco, California, 94103, United States",
+  "via": "nominatim"
+ },
+ "1675 Owens Street, San Francisco, CA 94158": {
+  "lat": 37.7679911,
+  "lng": -122.392759,
+  "display": "The Pub, 1675, Owens Street, Mission Bay, San Francisco, California, 94143, United States",
+  "via": "nominatim"
+ },
+ "221 Kearny Street, San Francisco, CA 94108": {
+  "lat": 37.7904007,
+  "lng": -122.4040622,
+  "display": "221, Kearny Street, Union Square, Financial District, San Francisco, California, 94108, United States",
+  "via": "nominatim"
+ },
+ "2389 Mission Street, San Francisco, CA 94110": {
+  "lat": 37.7589464,
+  "lng": -122.4188135,
+  "display": "2389, Mission Street, Mission, San Francisco, California, 94110, United States",
+  "via": "nominatim"
+ },
+ "2391 Mission Street, San Francisco, CA 94110": {
+  "lat": 37.7588476,
+  "lng": -122.4188406,
+  "display": "2391;2393, Mission Street, Mission, San Francisco, California, 94110, United States",
+  "via": "nominatim"
+ },
+ "25 Lusk Street, San Francisco, CA 94107": {
+  "lat": 37.7784084,
+  "lng": -122.3942502,
+  "display": "25, Lusk Street, South of Market, Mission Bay, San Francisco, California, 94107, United States",
+  "via": "nominatim"
+ },
+ "2665 Mission Street, San Francisco, CA": {
+  "lat": 37.7544372,
+  "lng": -122.4182629,
+  "display": "2663;2665;2669, Mission Street, Mission, San Francisco, California, 94110, United States",
+  "via": "nominatim"
+ },
+ "3030 20th Street, San Francisco, CA 94110": {
+  "lat": 37.759345,
+  "lng": -122.4114443,
+  "display": "3030, 20th Street, Potrero Hill, Mission, San Francisco, California, 94110, United States",
+  "via": "nominatim"
+ },
+ "3543 18th Street #8, San Francisco, CA 94110": {
+  "lat": 37.7614267,
+  "lng": -122.4226102,
+  "display": "The Women's Building, 3543, 18th Street, Castro District, Mission, San Francisco, California, 94110, United States",
+  "via": "nominatim"
+ },
+ "511 Harrison St, San Francisco, CA 94105": {
+  "lat": 37.7856376,
+  "lng": -122.3933344,
+  "display": "511, Harrison Street, Rincon Hill, Financial District, San Francisco, California, 94105, United States",
+  "via": "nominatim"
+ },
+ "555 2nd Street, San Francisco, CA 94107": {
+  "lat": 37.7825015,
+  "lng": -122.3926613,
+  "display": "555, 2nd Street, South Beach, San Francisco, California, 94107, United States",
+  "via": "nominatim"
+ },
+ "601 19th Street, San Francisco, CA 94107": {
+  "lat": 37.761528,
+  "lng": -122.3889859,
+  "display": "The Pearl, 601, 19th Street, Dogpatch, Potrero Hill, San Francisco, California, 94107, United States",
+  "via": "nominatim"
+ },
+ "654 Mission Street, San Francisco, CA 94105-4015": {
+  "lat": 37.787196,
+  "lng": -122.4012427,
+  "display": "SPUR Urban Center, 654, Mission Street, South of Market, Financial District, San Francisco, California, 94105, United States",
+  "via": "nominatim"
+ },
+ "7 Heron St, San Francisco, CA": {
+  "lat": 37.7746018,
+  "lng": -122.4083167,
+  "display": "7, Heron Street, South of Market, Civic Center, Mission, San Francisco, California, 94103, United States",
+  "via": "nominatim"
+ },
+ "701 Mission Street, San Francisco, CA 94103": {
+  "lat": 37.785894,
+  "lng": -122.402327,
+  "display": "701, Mission Street, South of Market, Financial District, San Francisco, California, 94103, United States",
+  "via": "nominatim"
+ },
+ "814 Mission Street, San Francisco, CA 94103": {
+  "lat": 37.7843613,
+  "lng": -122.4047434,
+  "display": "Sentro Filipino, 814, Mission Street, South of Market, Tenderloin, San Francisco, California, 94108, United States",
+  "via": "nominatim"
+ },
+ "845 Bush Street, San Francisco, CA 94108": {
+  "lat": 37.7896401,
+  "lng": -122.4112442,
+  "display": "White Swan Inn, 845, Bush Street, Lower Nob Hill, Nob Hill, San Francisco, California, 94108, United States",
+  "via": "nominatim"
+ },
+ "85 5th Street, San Francisco, CA 94103": {
+  "lat": 37.7830549,
+  "lng": -122.4066689,
+  "display": "The Pickwick Hotel, 85, 5th Street, South of Market, Tenderloin, San Francisco, California, 94103, United States",
+  "via": "nominatim"
+ },
+ "88 Natoma Street, San Francisco, CA 94105": {
+  "lat": 37.787515,
+  "lng": -122.3985465,
+  "display": "88, Natoma Street, South of Market, Financial District, San Francisco, California, 94105, United States",
+  "via": "nominatim"
+ },
+ "972 Mission Street, San Francisco, CA 94103": {
+  "lat": 37.7816984,
+  "lng": -122.408392,
+  "display": "Ayoub & Kubein Building, 972, Mission Street, South of Market, Tenderloin, San Francisco, California, 94103, United States",
+  "via": "nominatim"
+ },
+ "981 Mission Street, San Francisco, CA 94103": {
+  "lat": 37.781237,
+  "lng": -122.4081142,
+  "display": "Trellis, 981, Mission Street, South of Market, Tenderloin, San Francisco, California, 94103, United States",
+  "via": "nominatim"
+ },
+ "991 Tennessee Street, San Francisco, CA 94107": {
+  "lat": 37.7598378,
+  "lng": -122.3891238,
+  "display": "991, Tennessee Street, Dogpatch, Potrero Hill, San Francisco, California, 94158, United States",
+  "via": "nominatim"
+ },
+ "995 Market St, San Francisco": {
+  "lat": 37.7822426,
+  "lng": -122.4099718,
+  "display": "Frontier Tower, Berlinhouse, 995, Market Street, South of Market, Tenderloin, San Francisco, California, 94103, United States",
+  "via": "nominatim"
+ },
+ "Pier 9, San Francisco, CA 94111": {
+  "lat": 37.8007914,
+  "lng": -122.3965529,
+  "display": "Pier 9, The Embarcadero, Telegraph Hill, Financial District, San Francisco, California, 94111, United States",
+  "via": "nominatim"
+ }
+}

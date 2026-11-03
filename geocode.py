@@ -25,6 +25,8 @@ def gsi(q):
 
 def us_variants(a):
     v = [a]
+    a = re.sub(r'\s*\([^)]*\)', '', a)              # drop notes like (entrance at ...)
+    v.append(a)
     b = re.sub(r',?\s*(suite|ste\.?|unit|#|floor|fl\.?)\s*[\w-]+', '', a, flags=re.I); v.append(b)
     c = re.sub(r'^[^,]*\b(hall|building|bldg|center)\b[^,]*,\s*', '', b, flags=re.I); v.append(c)
     v.append(re.sub(r'\s+\d{5}(-\d{4})?$', '', c))
