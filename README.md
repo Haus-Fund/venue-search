@@ -13,9 +13,11 @@ npm install
 npm run build        # data/properties.json -> data/inventory/inventory.json -> data/exports/haus-fund-housing-network.html
 ```
 
-Open `data/exports/haus-fund-housing-network.html` in a browser. It works offline.
+Open `data/exports/haus-fund-housing-network.html` in a browser. It works offline. A built copy with satellite imagery is committed, so you can open it without building.
 
-Satellite imagery is optional and not in git. Without it the map shows streets on a dark background. To add it, run `npm run fetch:tiles` and then `npm run build` again.
+The raw imagery tiles (Esri World Imagery, about 47 MB) are not in git. Without them a fresh build shows streets on a dark background. To get them, run `npm run fetch:tiles` and then `npm run build`. In a sandbox behind a proxy, set `NODE_USE_ENV_PROXY=1` first. Keep the page under 16 MB if you publish it as a Claude artifact; it is about 15.3 MB now.
+
+`data/fetch-tiles-labels.ts` is left out of `fetch:tiles`: CARTO now needs an API key and returns watermarked tiles without one. Street and place names come from OpenStreetMap instead (`data/inventory/roads.json`).
 
 Older React site (ops view at `/`, founder search at `/find`):
 

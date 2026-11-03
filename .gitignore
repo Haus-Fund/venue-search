@@ -12,9 +12,9 @@ service-account.json
 data/tiles/
 data/tiles/
 data/tiles-sat/
-data/exports/*.html
 web/public/haus-fund-inventory.html
 files/
 files.zip
-data/exports/
+data/exports/*
+!data/exports/haus-fund-housing-network.html
 web/public/haus-fund-housing-network.html
