@@ -1,0 +1,20 @@
+{
+  "name": "venue-search",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "mkdir -p data/exports && tsx data/export-inventory.ts && tsx data/build-inventory.ts && mkdir -p web/public && cp data/exports/haus-fund-housing-network.html web/public/",
+    "fetch:roads": "tsx data/fetch-osm-roads.ts",
+    "fetch:tiles": "tsx data/fetch-tiles-sat.ts && tsx data/fetch-tiles-more.ts && tsx data/fetch-tiles-world.ts && tsx data/fetch-tiles-labels.ts",
+    "typecheck": "tsc --noEmit",
+    "web:dev": "npm --prefix web run dev",
+    "web:build": "npm --prefix web run build"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "sharp": "^0.35.4",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
+  }
+}

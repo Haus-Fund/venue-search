@@ -1,24 +1,41 @@
 # venue-search
 
-Search and scoring code for finding buildings (venues) for Haus residencies.
-Copied from [riaarora016/haus-fund-housing-network](https://github.com/riaarora016/haus-fund-housing-network) at commit `a6eeb38`. File paths match the source repo.
+Search for buildings (venues) for Haus residencies. You type what a house needs in plain words ("40 beds, kitchen, under $1,500, 15 min walk") and get matching buildings on a map, ranked by a 0 to 100 fit score.
 
-These are the search files only. They are not a runnable app on their own: the map (`40-map.js`), detail drawer (`60-drawer.js`), views (`70-views.js`), `template.html`, the build scripts and the data stay in the source repo.
+Copied from [riaarora016/haus-fund-housing-network](https://github.com/riaarora016/haus-fund-housing-network) at commit `a6eeb38`. File paths match the source repo. The Google Sheet sync, scrapers and email refresh engine stay there.
 
-## Files
+## Run it
 
-**Main app** (`data/inventory/src/`, concatenated into one HTML page in the source repo)
+Main app (one self-contained HTML page):
 
-- `30-filters.js`: `parsePrompt()` turns plain text ("40 beds, kitchen, under $1,000, 15 min walk, from Sep 15") into filters; `matches()` applies them, `sortFn()` sorts, and the search state goes into the URL.
-- `20-scoring.js`: `hausFit()`, a 0 to 100 score from price per bed, walk time, kitchen, bed count, safety and timing, with a note per part.
-- `10-model.js`, `00-config.js`: building records, score weights, target price per bed.
-- `90-app.js`: `runPrompt()` connects the search box to the parser, map and results.
-- `50-list.js`: the results list.
+```bash
+npm install
+npm run build        # data/properties.json -> data/inventory/inventory.json -> data/exports/haus-fund-housing-network.html
+```
 
-**Older web site** (`web/src/`, Vite + React)
+Open `data/exports/haus-fund-housing-network.html` in a browser. It works offline.
 
-- `pages/FindPage.tsx`: the founder search page (arrival, nights, max price, kitchen, walk time).
-- `lib/filters.ts`, `components/FiltersBar.tsx`: filters for the ops view.
-- `lib/staleness.ts`: price freshness.
+Satellite imagery is optional and not in git. Without it the map shows streets on a dark background. To add it, run `npm run fetch:tiles` and then `npm run build` again.
 
-**Offline scoring:** `data/score.ts`.
+Older React site (ops view at `/`, founder search at `/find`):
+
+```bash
+npm --prefix web install
+npm run web:dev      # http://localhost:5173
+```
+
+## Where the search lives
+
+- `data/inventory/src/30-filters.js`: `parsePrompt()` turns plain text into filters; `matches()` applies them, `sortFn()` sorts, and the search state goes into the URL.
+- `data/inventory/src/20-scoring.js`: `hausFit()`, the fit score from price per bed, walk time, kitchen, bed count, safety and timing.
+- `data/inventory/src/90-app.js`: `runPrompt()` connects the search box to the parser, map and results.
+- `data/inventory/src/` other modules: config, data model, map, results list, detail drawer, views. `data/build-inventory.ts` joins them into `data/inventory/template.html`.
+- `web/src/pages/FindPage.tsx`, `web/src/lib/filters.ts`: search in the React site.
+- `data/score.ts`: offline scoring.
+
+## Data
+
+- `data/properties.json`: the buildings. In the source repo this is generated from the tracker spreadsheet; here it is a snapshot.
+- `data/haus-nodes.json`: houses and their needs (bed range, kitchen rule, score weights, walk limit).
+- `data/cohorts.json`: markets (San Francisco, Kobe) and anchors.
+- `data/inventory/roads.json`: streets from OpenStreetMap (`npm run fetch:roads` refreshes it).
