@@ -58,7 +58,7 @@
     if (f.minBeds != null) out.push({ k: 'minBeds', label: `${f.minBeds}+ benches` });
     if (f.maxBed != null) out.push({ k: 'maxBed', label: `up to ${HFI.fmtMoney(f.maxBed, { short: true })}/bench` });
     if (f.maxWalk != null) out.push({ k: 'maxWalk', label: `${f.maxWalk} min walk or less` });
-    if (f.kitchen) out.push({ k: 'kitchen', label: 'BSL-2 required' });
+    if (f.kitchen) out.push({ k: 'kitchen', label: 'BSL-2 (unknown allowed)' });
     if (f.safety) out.push({ k: 'safety', label: 'Wet lab only' });
     if (f.room === 'private') out.push({ k: 'room', label: 'Private suite' });
     if (f.equip.length) out.push({ k: 'equip', label: f.equip.map((e) => C.EQUIPMENT[e]).join(', ') });
@@ -79,13 +79,13 @@
 
   // ---- plain-language prompt -> filters ----
   const MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, sept: 8, oct: 9, nov: 10, dec: 11 };
-  const STOP = new Set('lab labs laboratory laboratories bench benches space spaces wet dry bsl bsl-2 bsl2 bsl-1 level suite suites office desk desks startup biotech team teams scientists i we need want looking for a an the with and or of to in at near close by around under below over above up max min beds bed people person persons founders residents rooms room kitchen private shared safe safety calm quiet cheap budget month monthly per walk walking minutes minute min mins from starting move nights night housing house building place somewhere something anything please find show me give us that is are be can could should would about roughly approx approximately least most only just also verified confirmed frontier tower kobe japan san francisco sf block blocks building buildings area areas location locations spot spots space spaces option options list any some all with within'.split(' '));
+  const STOP = new Set('kbic minatojima lab labs laboratory laboratories bench benches space spaces wet dry bsl bsl-2 bsl2 bsl-1 level suite suites office desk desks startup biotech team teams scientists i we need want looking for a an the with and or of to in at near close by around under below over above up max min beds bed people person persons founders residents rooms room kitchen private shared safe safety calm quiet cheap budget month monthly per walk walking minutes minute min mins from starting move nights night housing house building place somewhere something anything please find show me give us that is are be can could should would about roughly approx approximately least most only just also verified confirmed frontier tower kobe japan san francisco sf block blocks building buildings area areas location locations spot spots space spaces option options list any some all with within'.split(' '));
   let corpus = null;
   const corpusWords = () => { if (corpus) return corpus; corpus = new Set(); for (const r of HFI.records()) for (const w of text(r).split(/[^a-z0-9']+/)) if (w.length >= 3) corpus.add(w); return corpus; };
   HFI.parsePrompt = (input, base) => {
     const f = { ...base }; const read = []; let s = ' ' + input.toLowerCase().replace(/,(?=\d{3}\b)/g, '').replace(/[,;:]/g, ' ') + ' '; const eat = (re) => { const m = s.match(re); if (m) s = s.replace(re, ' '); return m; };
     let m;
-    if (eat(/\b(kobe|japan|port island)\b/)) { f.market = 'kobe'; read.push('Kobe'); }
+    if (/\b(kbic|minatojima)\b/.test(s) | !!eat(/\b(kobe|japan|port island)\b/)) { f.market = 'kobe'; read.push('Kobe'); }
     else if (eat(/\b(san francisco|sf)\b/)) { f.market = 'sf'; }
     for (const n of HFI.nodes.values()) { const key = n.name.toLowerCase(); const re = new RegExp(`\\b(${key}|${key.replace('haus', ' haus')}|${key.replace('haus', '')} house)\\b`); if (eat(re)) { f.haus = n.id; if (n.market && HFI.markets.get(n.market)?.has_map) f.market = n.market; read.push(n.name); } }
     if (!f.haus && eat(/\b(women|women's|female|femme)\b/)) { f.haus = 'fem-haus'; read.push('Femhaus'); }
@@ -98,7 +98,7 @@
     if ((m = eat(/\b(\d+)\s*nights?\b/))) f.nights = +m[1];
     else if ((m = eat(/\b(\d+)\s*months?\b/))) f.nights = +m[1] * 30;
     if ((m = eat(/\b(?:from|starting|start|move[- ]?in|arriving|arrive)\s+(?:on\s+)?([a-z]{3,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?(?:\s+(\d{4}))?\b/))) { const mo = MONTHS[m[1].slice(0, 4)] ?? MONTHS[m[1].slice(0, 3)]; if (mo != null) { const now = new Date(); let y = m[3] ? +m[3] : now.getFullYear(); const d = new Date(y, mo, +m[2]); if (!m[3] && d < now) y++; f.from = `${y}-${String(mo + 1).padStart(2, '0')}-${String(+m[2]).padStart(2, '0')}`; read.push(`from ${HFI.fmtDate(f.from)}`); } }
-    if (eat(/\b(bsl[- ]?2|biosafety level 2|level 2)\b/)) { f.kitchen = true; read.push('BSL-2 required'); }
+    if (eat(/\b(bsl[- ]?2|biosafety level 2|level 2)\b/)) { f.kitchen = true; read.push('BSL-2'); }
     else eat(/\b(bsl[- ]?1|biosafety level 1)\b/);
     if (eat(/\bwet(?:[- ]?lab)?\b/)) { f.safety = true; read.push('wet lab only'); }
     if (eat(/\b(private|own suite|own lab|dedicated)\b/)) { f.room = 'private'; read.push('private suite'); }

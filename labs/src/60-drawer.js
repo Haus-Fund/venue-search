@@ -1,6 +1,6 @@
 // Property detail drawer: economics, capacity, facilities, location, operations, contact, deal, timeline, source. Edit mode + quick actions.
 (function () {
-  const $ = HFI.$, $$ = HFI.$$, esc = HFI.esc, fm = HFI.fmtMoney; const S = HFI.state;
+  const C = HFI.CONFIG, $ = HFI.$, $$ = HFI.$$, esc = HFI.esc, fm = HFI.fmtMoney; const S = HFI.state;
   const val = (v, unit = '') => v == null || v === '' ? '<span class="unk">unknown</span>' : `${esc(v)}${unit}`;
   const money = (v) => v == null ? '<span class="unk">unknown</span>' : fm(v);
   const fresh = (iso, kind) => { const f = HFI.freshness(iso, kind); return `<span class="fr ${f.level}">${f.label}</span>`; };
@@ -22,7 +22,7 @@
         <div class="d-actions">${contactLine}<button class="btn sm" data-act="copy-outreach">Copy outreach</button><button class="btn sm" data-act="contacted">Mark contacted</button><button class="btn sm" data-act="note">Add note</button><button class="btn sm" data-act="followup">Set follow-up</button><button class="btn sm${HFI.shortlist.has(r.id) ? ' on' : ''}" data-act="star">${HFI.shortlist.has(r.id) ? 'Shortlisted' : 'Shortlist'}</button><button class="btn sm primary" data-act="edit">Edit</button></div>
       </div>
       <div class="d-body">
-        ${sec('Haus fit', `<div class="fitgrid">${Object.entries(fit.parts).map(([k, p]) => `<div class="fp"><span class="k">${k}</span><span class="v">${p.pts}<small>/${p.max}</small></span><span class="n">${esc(p.note)}</span></div>`).join('')}</div>${fit.excluded ? `<div class="warn-box">Excluded by current filters: ${fit.reasons.join(', ')}</div>` : ''}`)}
+        ${sec('Haus fit', `<div class="fitgrid">${Object.entries(fit.parts).map(([k, p]) => `<div class="fp"><span class="k">${({ kitchen: 'BSL-2', safety: 'wet lab' })[k] || k}</span><span class="v">${p.pts}<small>/${p.max}</small></span><span class="n">${esc(p.note)}</span></div>`).join('')}</div>${fit.excluded ? `<div class="warn-box">Excluded by current filters: ${fit.reasons.join(', ')}</div>` : ''}`)}
         ${sec('Economics', kv([
           ['Listed', r.asking_per_bed != null || r.price_sqft_yr != null ? [r.asking_per_bed != null ? `~${fm(r.asking_per_bed)}/bench/mo` : '', r.price_sqft_yr != null ? `~${fm(r.price_sqft_yr)}/sqft/yr` : ''].filter(Boolean).join(' · ') + (r.fx_note ? ` <span class="unk">(${esc(r.fx_note)})</span>` : '') : val(null)], ['As published', r.asking_raw ? `<span class="unk">${esc(r.asking_raw)}</span>` : val(null)],
           ['Verified price', r.verified_per_bed != null ? `${fm(r.verified_per_bed)}/bench ${fresh(r.last_price_verified_at, 'price')}${r.verified_private_room != null ? ` · private ${fm(r.verified_private_room)}` : ''}` : '<span class="unk">not verified</span>'],

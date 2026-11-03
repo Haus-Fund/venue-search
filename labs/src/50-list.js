@@ -40,7 +40,7 @@
       <div class="c-top"><div class="c-name">${esc(r.property_name)}${r.current_deal ? ' <span class="tag deal">current deal</span>' : ''}${r.geo_precision !== 'address' ? ' <span class="tag">approx. location</span>' : ''}</div>
         <button class="star${HFI.shortlist.has(r.id) ? ' on' : ''}" data-star="${r.id}" aria-label="${HFI.shortlist.has(r.id) ? 'Remove from shortlist' : 'Add to shortlist'}" title="Shortlist">${HFI.ICON.star}</button></div>
       <div class="c-sub">${esc(r.address || '')}${r.neighborhood ? ` · ${esc(r.neighborhood)}` : ''}</div>
-      <div class="c-price">${priceLine(r, f.room)}<span class="fit" title="${esc(Object.entries(fit.parts).map(([k, p]) => `${k} ${p.pts}/${p.max}: ${p.note}`).join('\n'))}">Fit <b>${fit.score}</b></span></div>
+      <div class="c-price">${priceLine(r, f.room)}<span class="fit" title="${esc(Object.entries(fit.parts).map(([k, p]) => `${({ kitchen: 'BSL-2', safety: 'wet lab' })[k] || k} ${p.pts}/${p.max}: ${p.note}`).join('\n'))}">Fit <b>${fit.score}</b></span></div>
       <div class="c-facts"><span>${bedsTxt(r)}</span><span>${walkTxt(r)}</span>${kitchenChip(r)}${safetyChip(r)}${statusChip(r)}</div>
       ${cfg ? `<div class="c-cfg">${cfg}</div>` : ''}
       <div class="c-meta">${r.available_beds != null ? `<span class="fr ${r.avail_fresh.level}">Availability ${HFI.ago(r.last_availability_verified_at) || 'unverified'}</span>` : ''}${r.last_contacted_at ? `<span class="fr ${r.contact_fresh.level}">Contacted ${HFI.ago(r.last_contacted_at)}</span>` : ''}${tags.length ? `<span class="fr haus">${tags.join(', ')}</span>` : ''}${r.attention.length ? `<span class="fr attn">${esc(r.attention[0])}${r.attention.length > 1 ? ` +${r.attention.length - 1}` : ''}</span>` : ''}</div>
