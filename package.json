@@ -9,7 +9,9 @@
     "fetch:tiles": "tsx data/fetch-tiles-sat.ts && tsx data/fetch-tiles-more.ts && tsx data/fetch-tiles-world.ts",
     "typecheck": "tsc --noEmit",
     "web:dev": "npm --prefix web run dev",
-    "web:build": "npm --prefix web run build"
+    "web:build": "npm --prefix web run build",
+    "labs:geocode": "python3 labs/geocode.py",
+    "labs:build": "tsx labs/export.ts && tsx data/build-inventory.ts labs/inventory.json labs/exports/haus-fund-lab-finder.html labs/template.html labs/src"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",

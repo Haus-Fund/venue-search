@@ -1,5 +1,7 @@
 # venue-search
 
+Two searches for Haus residencies, on the same map app: housing (below) and lab space ([Lab Finder](#lab-finder)).
+
 Search for buildings (venues) for Haus residencies. You type what a house needs in plain words ("40 beds, kitchen, under $1,500, 15 min walk") and get matching buildings on a map, ranked by a 0 to 100 fit score.
 
 Copied from [riaarora016/haus-fund-housing-network](https://github.com/riaarora016/haus-fund-housing-network) at commit `a6eeb38`. File paths match the source repo. The Google Sheet sync, scrapers and email refresh engine stay there.
@@ -41,3 +43,20 @@ npm run web:dev      # http://localhost:5173
 - `data/haus-nodes.json`: houses and their needs (bed range, kitchen rule, score weights, walk limit).
 - `data/cohorts.json`: markets (San Francisco, Kobe) and anchors.
 - `data/inventory/roads.json`: streets from OpenStreetMap (`npm run fetch:roads` refreshes it).
+
+## Lab Finder
+
+The same app, pointed at lab space instead of housing. Describe what you need ("4 benches, BSL-2, fume hood, under $2,500 per bench, 20 min walk") and see matching lab spaces on the map, ranked by a 0 to 100 fit score: price per bench, walk to the anchor (Frontier Tower in San Francisco, KBIC in Kobe), BSL-2, bench count, wet lab and move-in date.
+
+Open `labs/exports/haus-fund-lab-finder.html` in a browser. To rebuild after editing the data:
+
+```bash
+npm run labs:geocode   # only looks up new addresses (OpenStreetMap Nominatim, 1 per second)
+npm run labs:build
+```
+
+- `labs/research/*.json`: the lab spaces, one file per market, from web research. Every record links its sources. Anything the research did not find is null, never guessed. Prices are as listed on the operator's site, not verified by a call.
+- `labs/export.ts`: turns the research into `labs/inventory.json`. Walk times are estimated from straight-line distance. Kobe prices are converted to dollars at a fixed approximate rate (`JPY_PER_USD`) so they can be compared; the yen price is kept as published.
+- `labs/src/`: the modules that differ from the housing app (config, model, scoring, filters and prompt parser, list, drawer, views). `data/build-inventory.ts` uses them in place of the same-named files in `data/inventory/src/`, so the map engine and app shell are shared.
+- The parser understands bench counts, budget, walk time, BSL-2, wet lab, private suite, equipment (fume hood, biosafety cabinet, autoclave, cold room, -80 freezer, tissue culture, vivarium, shared core equipment) and space type (incubator, community lab, coworking, university core, lab building).
+- Internally the lab records reuse the housing field names: `total_beds` holds benches, `kitchen_status` holds BSL-2 (communal = yes), `safety_flag` holds wet lab (ok = wet lab, rough-block = dry lab only).

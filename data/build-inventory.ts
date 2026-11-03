@@ -6,10 +6,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 
+// Usage: tsx data/build-inventory.ts [data.json] [out.html] [template.html] [overrideSrcDir]
+// A file in overrideSrcDir replaces the same-named module in data/inventory/src (labs/ uses this).
 const read = (p: string) => fs.readFileSync(p, 'utf8');
-const data = read('data/inventory/inventory.json');
+const [DATA = 'data/inventory/inventory.json', OUT = 'data/exports/haus-fund-housing-network.html', TPL = 'data/inventory/template.html', OVERRIDE] = process.argv.slice(2);
+const data = read(DATA);
 const srcDir = 'data/inventory/src';
-const app = fs.readdirSync(srcDir).filter((f) => f.endsWith('.js')).sort().map((f) => `// ==== ${f} ====\n` + read(path.join(srcDir, f))).join('\n');
+const modules = new Map(fs.readdirSync(srcDir).filter((f) => f.endsWith('.js')).map((f) => [f, path.join(srcDir, f)]));
+if (OVERRIDE) for (const f of fs.readdirSync(OVERRIDE).filter((f) => f.endsWith('.js'))) modules.set(f, path.join(OVERRIDE, f));
+const app = [...modules.keys()].sort().map((f) => `// ==== ${f} ====\n` + read(modules.get(f)!)).join('\n');
 const SAT = path.join('data', 'tiles-sat'), OSM = path.join('data', 'tiles'), OPT = path.join(SAT, '.opt');
 fs.mkdirSync(OPT, { recursive: true });
 const JPEG_Q = 60;
@@ -52,13 +57,13 @@ const sizeOf = (L: Layer | null) => (L ? L.tiles.reduce((s, t) => s + t.d.length
   const world = { z: TZ, x0: 0, y0: 0, cols: 2 ** TZ, rows: 2 ** TZ, minK: 0.2, levels, street: [] };   // never stretch the sharpest imagery past 1.25x
   const tilesets = { world };
   const NB = { sf: { 'SoMa': [37.7785, -122.4056], 'Nob Hill': [37.7930, -122.4160], 'Civic Center': [37.7795, -122.4180], 'FiDi': [37.7940, -122.4000], 'Union Square': [37.7880, -122.4075], 'NoPa/Panhandle': [37.7750, -122.4430] }, kobe: { 'Port Island': [34.6660, 135.2120], 'Sannomiya': [34.6950, 135.1950], 'KBIC': [34.6575, 135.2235] } };
-  const tpl = read('data/inventory/template.html');
+  const tpl = read(TPL);
   const tilesJson = JSON.stringify(tilesets);
   const out = tpl.replace('/*__DATA__*/', () => data).replace('/*__TILES__*/', () => tilesJson).replace('/*__NB__*/', () => JSON.stringify(NB)).replace('/*__ROADS__*/', () => read('data/inventory/roads.json')).replace('/*__APP__*/', () => app);
-  fs.mkdirSync('data/exports', { recursive: true });
-  fs.writeFileSync('data/exports/haus-fund-housing-network.html', out);
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  fs.writeFileSync(OUT, out);
   const mb = (n: number) => (n / 1048576).toFixed(2);
-  console.log(`haus-fund-housing-network.html: ${mb(out.length)} MB total (data ${mb(data.length)}, app ${mb(app.length)})`);
+  console.log(`${path.basename(OUT)}: ${mb(out.length)} MB total (data ${mb(data.length)}, app ${mb(app.length)})`);
   console.log('  ' + report.join(' · '));
   if (out.length > 15.5 * 1048576) console.warn('WARNING: over 15.5 MB, the artifact limit is 16 MB');
 })();

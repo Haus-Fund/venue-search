@@ -18,3 +18,5 @@ files.zip
 data/exports/*
 !data/exports/haus-fund-housing-network.html
 web/public/haus-fund-housing-network.html
+labs/exports/*
+!labs/exports/haus-fund-lab-finder.html
