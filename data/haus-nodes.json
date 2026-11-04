@@ -172,18 +172,18 @@
       "status": "planned",
       "status_label": "Sep 2026",
       "kind": "Cell and gene therapy node",
-      "description": "Lab space inside KBIC, the Kobe Biomedical Innovation Cluster, with cohort living space on campus. Bench and bed on the same island. First cohort targeted September 2026 with Frontier Humans, running into Mirai Tech PopUp City on Port Island.",
+      "description": "Cohort lives in a shared house in Ninomiya-cho, near Sannomiya, and works at KBIC on Port Island, a Port Liner ride away. First cohort Sep 22 to Nov 17, 2026, alongside Mirai Tech PopUp City.",
       "tags": [
         "KBIC lab space",
         "PMDA pathways",
-        "On-campus living"
+        "Shared house near Sannomiya"
       ],
       "start_date": "2026-09",
       "start_date_precision": "month",
-      "neighborhood": "Port Island",
-      "lat": 34.6575,
-      "lng": 135.2235,
-      "location_precision": "campus",
+      "neighborhood": "Ninomiya-cho (near Sannomiya)",
+      "lat": 34.700184,
+      "lng": 135.1987,
+      "location_precision": "neighborhood",
       "linked_candidate_ids": [],
       "planning_note": null,
       "profile": {
@@ -198,10 +198,10 @@
           "safety": 10,
           "timing": 5
         },
-        "note": "Walking distance to KBIC on Port Island. No candidates logged yet.",
-        "max_walk": 25
+        "note": "Shared house with a kitchen in Ninomiya-cho near Sannomiya; KBIC is a Port Liner ride away, so no walk limit to KBIC.",
+        "max_walk": null
       },
-      "source": "haus.fund/cellhaus and haus.fund/expansion (Sept 2026)"
+      "source": "haus.fund/cellhaus and haus.fund/expansion (Sept 2026); house area from CellHaus emails (Sep to Nov 2026)"
     },
     {
       "id": "pharm-haus",
