@@ -8,7 +8,7 @@
 #   "events": [{title, date, venue_name, existing_venue_id, headcount, notes, sources}]}
 # Places of the matching kind update the record with existing_id (status, contact, follow-up, a dated note) or are added
 # as new records. Needs become the start-screen note and example searches for the market, and the house's bed range.
-import json, math, sys
+import json, math, re, sys
 from geocode import geocode
 
 KIND, INV, OVERLAY, OUT = sys.argv[1:5]
@@ -35,6 +35,7 @@ def note(date, text):
     return f"[{date or '?'} CellHaus email] {text}"
 
 added = updated = 0
+by_name = {}
 for p in ov.get('places', []):
     if p.get('kind') != KIND: continue
     srcs = p.get('sources') or []
@@ -61,21 +62,55 @@ for p in ov.get('places', []):
     if r.get('contact_email') or r.get('contact_phone'): r['contact_verify'] = False
     r['haus_node_ids'] = sorted(set((r.get('haus_node_ids') or []) + [HOUSE]))
     r['notes'] = ' | '.join(x for x in [r.get('notes'), note(first, text)] if x)
+    by_name[p['name']] = r
+
+GENERIC = {'kobe', 'japan', 'sannomiya', 'port island', 'motomachi', 'harborland', 'chuo-ku', 'airbnb', 'hotel', 'building'}
+def aliases(name):
+    parts = [x.strip() for x in re.split(r'[(),;]', name) if x.strip()]
+    return [x.lower() for x in parts if x.lower() not in GENERIC and (len(x) >= 4 or (x.isupper() and len(x) >= 3))]
+
+def match_place(venue, places):
+    """The place whose longest name part appears (as whole words) in the event's venue text."""
+    v = (venue or '').lower()
+    if not v or 'tbc' in v: return None
+    best, best_len = None, 0
+    for pl in places:
+        for al in aliases(pl['name']):
+            if len(al) > best_len and re.search(rf'(?<![a-z0-9]){re.escape(al)}(?![a-z0-9])', v): best, best_len = pl, len(al)
+    return best
 
 if KIND == 'venue':
+    places = ov.get('places', [])
     for e in ov.get('events', []):
         r = recs.get(e.get('existing_venue_id') or '')
+        pl = None if r else match_place(e.get('venue_name'), places)
+        if pl and pl.get('kind') == 'venue': r = by_name.get(pl['name'])
+        elif pl:   # a lab or the house used for an event: list it as a venue too
+            r = by_name.get(pl['name'])
+            if r is None:
+                g = geocode(pl['address']) if pl.get('address') else None
+                mins, miles = walk(g['lat'], g['lng']) if g else (None, None)
+                r = {'id': f"cellhaus-venue-{len(recs)}", 'property_name': pl['name'], 'name_detail': pl.get('contact_org'), 'inventory_class': 'contracted_partner',
+                     'deal_status': 'signed', 'market': MARKET, 'city': 'Kobe', 'address': pl.get('address'), 'neighborhood': pl.get('neighborhood'),
+                     'lat': g and g['lat'], 'lng': g and g['lng'], 'geo_precision': 'address' if g else None, 'east_bay': False, 'property_type': None,
+                     'frontier_transit_minutes_est': mins, 'distance_miles': miles, 'source_type': 'cellhaus-email', 'source_links': [], 'haus_node_ids': [HOUSE],
+                     'cohort_ids': [], 'notes': note(None, f"Used by CellHaus for events ({pl.get('kind')} in the emails). {pl.get('summary') or ''}"), 'kitchen_status': 'unknown',
+                     'safety_flag': None, 'amenities': [], 'contact_name': pl.get('contact_name'), 'contact_email': pl.get('contact_email'), 'contact_phone': pl.get('contact_phone')}
+                recs[r['id']] = r; data['records'].append(r); by_name[pl['name']] = r; added += 1
         if not r: continue
         bits = [e.get('title'), f"{e['headcount']} people" if e.get('headcount') else None, e.get('notes')]
         r['notes'] = ' | '.join(x for x in [r.get('notes'), note(e.get('date'), 'Haus event here: ' + ', '.join(b for b in bits if b))] if x)
         r['haus_node_ids'] = sorted(set((r.get('haus_node_ids') or []) + [HOUSE]))
 
 # needs -> start screen note, example searches, and the house's bed range for housing
-head, start = needs.get('headcount'), needs.get('start_date')
+head_txt, start = needs.get('headcount'), needs.get('start_date')
+# headcount may be a number or a sentence; use its first number for searches, the full text in the note
+head = head_txt if isinstance(head_txt, int) else (int(re.search(r'\d+', head_txt).group()) if isinstance(head_txt, str) and re.search(r'\d+', head_txt) else None)
 summary = {'housing': needs.get('housing_needs'), 'lab': needs.get('lab_needs'), 'venue': needs.get('event_needs')}[KIND]
-facts = [f"{head} people" if head else None, f"from {start}" if start else None, f"to {needs['end_date']}" if needs.get('end_date') else None,
+facts = [(f"{head_txt} people" if isinstance(head_txt, int) else head_txt) if head_txt else None, f"from {start}" if start else None, f"to {needs['end_date']}" if needs.get('end_date') else None,
          f"companies: {', '.join(needs['companies'])}" if needs.get('companies') else None, summary, f"Budget: {needs['budget']}" if needs.get('budget') else None]
-text = '. '.join(f for f in facts if f)
+text = '. '.join(f.rstrip('.') for f in facts if f)
+if len(text) > 600: text = text[:600].rsplit(' ', 1)[0] + '... (full notes in private/cellhaus.json)'
 if text:
     data['intro_note'] = {**(data.get('intro_note') or {}), MARKET: {'title': f"{needs.get('cohort_name') or 'CellHaus'} needs (from email):", 'text': text}}
 ex = {'housing': [f"Cellhaus: {head} beds near KBIC" if head else 'Cellhaus near KBIC', f"{head or 12} beds with a kitchen on Port Island"],

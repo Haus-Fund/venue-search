@@ -37,12 +37,30 @@ def jp_query(a):
     return j.translate(str.maketrans('０１２３４５６７８９－', '0123456789-'))
 
 
+# English (romanized) Kobe addresses -> Japanese for GSI, e.g. "1-5-1 Minatojima Minamimachi, Chuo-ku, Kobe"
+KOBE_WARDS = {'chuo': '中央区', 'higashinada': '東灘区', 'nada': '灘区', 'hyogo': '兵庫区', 'nagata': '長田区', 'suma': '須磨区', 'tarumi': '垂水区', 'kita': '北区', 'nishi': '西区'}
+KOBE_TOWNS = {'minatojima minamimachi': '港島南町', 'minatojima nakamachi': '港島中町', 'minatojima': '港島', 'ninomiya': '二宮町', 'koyocho naka': '向洋町中',
+              'koyocho higashi': '向洋町東', 'koyocho nishi': '向洋町西', 'nakayamatedori': '中山手通', 'sannomiya': '三宮町', 'kano': '加納町', 'isogami': '磯上通',
+              'kumoidori': '雲井通', 'hatoba': '波止場町', 'higashikawasaki': '東川崎町', 'motomachi': '元町通', 'sakaemachi': '栄町通', 'kitanagasa': '北長狭通'}
+def kobe_romaji(addr):
+    a = addr.lower().replace('-cho', '')
+    if 'kobe' not in a: return None
+    nums = re.search(r'\b(\d+)-(\d+)(?:-(\d+))?\b', a)
+    ward = next((v for k, v in KOBE_WARDS.items() if re.search(rf'\b{k}(-ku| ku|ku)\b', a)), '中央区')
+    town = next((v for k, v in sorted(KOBE_TOWNS.items(), key=lambda kv: -len(kv[0])) if k in a.replace('-', ' ')), None)
+    if not (nums and town): return None
+    return f"神戸市{ward}{town}{'-'.join(n for n in nums.groups() if n)}"
+
 def geocode(addr):
     if re.search(r'[\u3040-\u30ff\u4e00-\u9fff]', addr):
         q = jp_query(addr)
         hit = gsi(q) if q else None
         if not hit and q: hit = gsi(re.sub(r'[\d-]+$', '', q))     # fall back to the chome
         return hit
+    q = kobe_romaji(addr.split(';')[0])
+    if q:
+        hit = gsi(q) or gsi(re.sub(r'[\d-]+$', '', q))
+        if hit: return hit
     for q in us_variants(addr):
         hit = nominatim(q)
         if hit: return hit
