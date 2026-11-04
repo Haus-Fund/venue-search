@@ -22,3 +22,5 @@ labs/exports/*
 !labs/exports/haus-fund-lab-finder.html
 events/exports/*
 !events/exports/haus-fund-venue-finder.html
+private/
+__pycache__/

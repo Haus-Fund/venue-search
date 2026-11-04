@@ -4,10 +4,6 @@
 # in parentheses; it resolves to the block (chome / banchi), which is close enough for walk estimates.
 # Usage: python3 labs/geocode.py [labs|events]
 import json, glob, subprocess, time, urllib.parse, os, re, sys
-DIR = sys.argv[1] if len(sys.argv) > 1 else 'labs'
-CACHE = f'{DIR}/geocache.json'
-cache = json.load(open(CACHE)) if os.path.exists(CACHE) else {}
-recs = [r for f in sorted(glob.glob(f'{DIR}/research/*.json')) for r in json.load(open(f))]
 
 def get(url):
     out = subprocess.run(['curl', '-s', '-H', 'User-Agent: haus-venue-search/1.0 (github.com/Haus-Fund/venue-search)', url], capture_output=True, text=True).stdout
@@ -40,18 +36,27 @@ def jp_query(a):
     j = re.sub(r'(番地?の?|号)$', '', j)
     return j.translate(str.maketrans('０１２３４５６７８９－', '0123456789-'))
 
-todo = sorted({r['address'] for r in recs if r.get('address') and not cache.get(r['address'])})
-for i, addr in enumerate(todo):
-    hit = None
-    if re.search(r'[぀-ヿ一-鿿]', addr):
+
+def geocode(addr):
+    if re.search(r'[\u3040-\u30ff\u4e00-\u9fff]', addr):
         q = jp_query(addr)
         hit = gsi(q) if q else None
         if not hit and q: hit = gsi(re.sub(r'[\d-]+$', '', q))     # fall back to the chome
-    else:
-        for q in us_variants(addr):
-            hit = nominatim(q)
-            if hit: break
-    cache[addr] = hit
-    print(f"{i+1}/{len(todo)} {'ok ' if hit else 'MISS'} {addr}{'  -> ' + hit['display'][:60] if hit else ''}")
-    json.dump(cache, open(CACHE, 'w'), indent=1, ensure_ascii=False)
-print(f"{sum(1 for r in recs if r.get('address') and cache.get(r['address']))}/{len(recs)} records placed")
+        return hit
+    for q in us_variants(addr):
+        hit = nominatim(q)
+        if hit: return hit
+    return None
+
+if __name__ == '__main__':
+    DIR = sys.argv[1] if len(sys.argv) > 1 else 'labs'
+    CACHE = f'{DIR}/geocache.json'
+    cache = json.load(open(CACHE)) if os.path.exists(CACHE) else {}
+    recs = [r for f in sorted(glob.glob(f'{DIR}/research/*.json')) for r in json.load(open(f))]
+    todo = sorted({r['address'] for r in recs if r.get('address') and not cache.get(r['address'])})
+    for i, addr in enumerate(todo):
+        hit = geocode(addr)
+        cache[addr] = hit
+        print(f"{i+1}/{len(todo)} {'ok ' if hit else 'MISS'} {addr}{'  -> ' + hit['display'][:60] if hit else ''}")
+        json.dump(cache, open(CACHE, 'w'), indent=1, ensure_ascii=False)
+    print(f"{sum(1 for r in recs if r.get('address') and cache.get(r['address']))}/{len(recs)} records placed")

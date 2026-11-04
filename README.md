@@ -76,3 +76,12 @@ npm run events:build
 - `events/export.ts`: research to `events/inventory.json`. Capacity is standing capacity, else seated. A venue must hold the whole headcount to match (venues with no published capacity still show).
 - `events/src/`: the modules that differ from the housing app. Internally `total_beds` holds capacity, `asking_per_bed` the hourly rate, `kitchen_status` whether food is allowed and `safety_flag` whether AV is on site.
 - The parser understands headcount ("for 100", "80 people"), budget per hour, walk time, food, AV, exclusive use, amenities (mics, stage, livestream, alcohol, bar, outdoor, wheelchair access, breakout rooms, whiteboards, kitchen, late night, parking) and venue type.
+
+## Private builds (CellHaus)
+
+Private notes, such as what the CellHaus emails say about Kobe places, contacts and needs, never go in this public repo. They live in `private/`, which git ignores:
+
+- `private/cellhaus.json`: the notes, in the format described at the top of `overlay.py`.
+- `private/build.sh`: merges them into all three apps with `overlay.py` and writes private copies to `private/exports/`. These pages show contact status, follow-ups, the Cellhaus tag and the CellHaus needs on the Kobe start screen.
+
+`overlay.py` and the start-screen hooks (`examples` and `intro_note` in the data) are generic and safe to publish. The public pages are built without any overlay.

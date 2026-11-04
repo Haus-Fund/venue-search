@@ -111,7 +111,7 @@
       <div class="intro-eyebrow">${esc(market?.name || '')}</div>
       <h2 class="intro-h">Hey Punk!</h2>
       <p class="intro-p">Describe the lab space you need in plain words above: benches, biosafety level, equipment, budget, walk time.</p>
-      <div class="intro-l">Try</div><div class="sug">${(EXAMPLES[f.market] || []).map((t) => `<button class="mini" data-prompt="${esc(t)}">${esc(t)}</button>`).join('')}</div>
+      ${HFI.data.intro_note?.[f.market] ? `<p class="intro-p"><b>${esc(HFI.data.intro_note[f.market].title)}</b> ${esc(HFI.data.intro_note[f.market].text)}</p>` : ''}<div class="intro-l">Try</div><div class="sug">${(HFI.data.examples?.[f.market] || EXAMPLES[f.market] || []).map((t) => `<button class="mini" data-prompt="${esc(t)}">${esc(t)}</button>`).join('')}</div>
     </div>`;
     $$('[data-prompt]').forEach((b) => b.addEventListener('click', () => HFI.runPrompt(b.dataset.prompt)));
   };
