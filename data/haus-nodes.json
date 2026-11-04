@@ -169,8 +169,8 @@
       "name": "Cellhaus",
       "market": "kobe",
       "city": "Kobe, Japan",
-      "status": "planned",
-      "status_label": "Sep 2026",
+      "status": "active",
+      "status_label": "Sep 22 to Nov 17",
       "kind": "Cell and gene therapy node",
       "description": "Cohort lives in a shared house in Ninomiya-cho, near Sannomiya, and works at KBIC on Port Island, a Port Liner ride away. First cohort Sep 22 to Nov 17, 2026, alongside Mirai Tech PopUp City.",
       "tags": [
@@ -178,8 +178,8 @@
         "PMDA pathways",
         "Shared house near Sannomiya"
       ],
-      "start_date": "2026-09",
-      "start_date_precision": "month",
+      "start_date": "2026-09-22",
+      "start_date_precision": "day",
       "neighborhood": "Ninomiya-cho (near Sannomiya)",
       "lat": 34.700184,
       "lng": 135.1987,
